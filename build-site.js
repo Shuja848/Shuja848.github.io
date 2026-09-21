@@ -2,7 +2,9 @@
 // Run: node build-site.js   (images come from ./img, copied from fiverr-pcb-gig/portfolio-pdf/opt)
 const fs = require('fs');
 const path = require('path');
-const projects = require('../fiverr-pcb-gig/portfolio-pdf/projects.js');
+// schematic sheets are excluded; only renders, layouts and photos are shown
+const noSch = f => !/schematic/i.test(f);
+const projects = require('../fiverr-pcb-gig/portfolio-pdf/projects.js').map(p => ({ ...p, thumbs: p.thumbs.filter(noSch), extra: (p.extra || []).filter(noSch) }));
 
 const jpg = f => f.replace(/\.(png|jpg)$/i, '.jpg');
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -50,7 +52,7 @@ const html = `<!DOCTYPE html>
 <title>Shuja Chaudhry | PCB and Embedded Hardware Design</title>
 <meta name="description" content="PCB and embedded hardware design portfolio of Shuja Chaudhry: multilayer PCB layout, ESP32, STM32, nRF52, BLE, battery powered and sensor electronics. Schematic to fabrication ready files.">
 <meta property="og:title" content="Shuja Chaudhry | PCB and Embedded Hardware Design">
-<meta property="og:description" content="16 selected PCB projects: wearable BLE devices, battery management, sensor front ends, 4 layer boards and assembled hardware.">
+<meta property="og:description" content="17 selected PCB projects: wearable BLE devices, battery management, sensor front ends, 4 layer boards and assembled hardware.">
 <meta property="og:image" content="https://shuja848.github.io/img/13-stm32-nrf52-secure-ble-device/render.jpg">
 <meta property="og:url" content="https://shuja848.github.io/">
 <link rel="canonical" href="https://shuja848.github.io/">
@@ -90,8 +92,9 @@ const html = `<!DOCTYPE html>
     </div>
   </div>
   <div class="hero-art" aria-hidden="true">
+    <img src="img/shuja.jpg" alt="Shuja Chaudhry" class="a0">
     <img src="img/13-stm32-nrf52-secure-ble-device/render.jpg" alt="" class="a1">
-    <img src="img/16-pemf-therapy-controller-hat/render.jpg" alt="" class="a2">
+    <img src="img/19-rk3568-ai-fishnet-board/render-angle.jpg" alt="" class="a2">
     <img src="img/02-esp32-ble-led-badge/5-render.jpg" alt="" class="a3">
   </div>
 </section>
@@ -106,7 +109,7 @@ const html = `<!DOCTYPE html>
       <div class="kicker">Selected work</div>
       <h2>Project case studies</h2>
     </div>
-    <p>Click any board for the full write up, 3D render, routed layout and schematic sheets.</p>
+    <p>Click any board for the full write up, 3D render and routed layout.</p>
   </div>
   <div class="filters" role="tablist">${filterButtons}</div>
   <div class="grid">${cards}</div>
@@ -144,6 +147,7 @@ const html = `<!DOCTYPE html>
     </div>
     <div class="contact-links">
       <a class="btn" href="mailto:shujachaudhry814@gmail.com">shujachaudhry814@gmail.com</a>
+      <a class="btn wa" href="https://wa.me/923152963657" target="_blank" rel="noopener">WhatsApp +92 315 2963657</a>
       <a class="btn ghost" href="https://www.linkedin.com/in/shuja-chaudhry-pcbdesign" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn ghost" href="https://www.fiverr.com/users/shuja_chaudhry/portfolio" target="_blank" rel="noopener">Fiverr</a>
       <a class="btn ghost" href="Shuja_Chaudhry_PCB_Portfolio.pdf" target="_blank" rel="noopener">Download PDF portfolio</a>
@@ -153,7 +157,7 @@ const html = `<!DOCTYPE html>
 </main>
 
 <footer class="foot">
-  <span>Shuja Chaudhry, Hardware Design Engineer, PCB and Embedded Systems</span>
+  <span>Shuja Chaudhry, Hardware Design Engineer, PCB and Embedded Systems. Email shujachaudhry814@gmail.com, WhatsApp +92 315 2963657</span>
   <span>Native KiCad files, Gerbers and BOMs available on request, subject to client confidentiality.</span>
 </footer>
 
