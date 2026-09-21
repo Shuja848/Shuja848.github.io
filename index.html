@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shuja Chaudhry | PCB and Embedded Hardware Design</title>
+<meta name="description" content="PCB and embedded hardware design portfolio of Shuja Chaudhry: multilayer PCB layout, ESP32, STM32, nRF52, BLE, battery powered and sensor electronics. Schematic to fabrication ready files.">
+<meta property="og:title" content="Shuja Chaudhry | PCB and Embedded Hardware Design">
+<meta property="og:description" content="18 selected PCB projects: wearable BLE devices, battery management, sensor front ends, 4 layer boards and assembled hardware.">
+<meta property="og:image" content="https://shuja848.github.io/img/13-stm32-nrf52-secure-ble-device/render.jpg">
+<meta property="og:url" content="https://shuja848.github.io/">
+<link rel="canonical" href="https://shuja848.github.io/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f2238'/%3E%3Ccircle cx='20' cy='20' r='6' fill='%2338bdf8'/%3E%3Ccircle cx='44' cy='44' r='6' fill='%2338bdf8'/%3E%3Cpath d='M20 26v10h24v2' stroke='%2338bdf8' stroke-width='4' fill='none'/%3E%3C/svg%3E">
+<style>:root {
+  --bg: #0b1220;
+  --bg2: #101a2e;
+  --card: #141f36;
+  --line: rgba(148, 163, 184, 0.16);
+  --text: #e6edf7;
+  --muted: #9fb0c7;
+  --accent: #38bdf8;
+  --accent2: #7dd3fc;
+  --radius: 14px;
+  --max: 1180px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Segoe UI", Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: var(--accent2); text-decoration: none; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.15; }
+p { margin: 0; }
+.skip { position: absolute; left: -999px; top: 0; }
+.skip:focus { left: 12px; top: 12px; background: var(--accent); color: #012; padding: 8px 12px; border-radius: 8px; z-index: 99; }
+.kicker { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+
+/* nav */
+.nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: rgba(11, 18, 32, 0.82); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 700; font-size: 17px; }
+.logo { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg, var(--accent), #6366f1); position: relative; }
+.logo::after { content: ""; position: absolute; inset: 7px; border: 2px solid #0b1220; border-radius: 3px; }
+.nav nav { display: flex; align-items: center; gap: 26px; }
+.nav nav a { color: var(--muted); font-weight: 500; font-size: 15px; }
+.nav nav a:hover { color: var(--text); }
+.nav nav a.btn, .nav nav a.btn:hover { color: #05203a; }
+.menu { display: none; background: none; border: 0; padding: 6px; cursor: pointer; }
+.menu span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #05203a; font-weight: 700; padding: 12px 20px; border-radius: 10px; border: 1px solid transparent; transition: transform .15s, background .15s; }
+.btn:hover { background: var(--accent2); transform: translateY(-1px); }
+.btn.ghost { background: transparent; color: var(--text); border-color: rgba(148,163,184,0.35); }
+.btn.ghost:hover { border-color: var(--accent); background: rgba(56,189,248,0.08); }
+.btn.small { padding: 8px 14px; font-size: 14px; }
+
+/* hero */
+main { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+.hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center; padding: 84px 0 56px; }
+.hero h1 { font-size: clamp(30px, 4.2vw, 50px); font-weight: 800; letter-spacing: -0.02em; }
+.lead { color: var(--muted); font-size: 17px; margin-top: 20px; max-width: 560px; }
+.cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+.stats div { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--bg2); }
+.stats b { display: block; font-size: 24px; color: var(--accent); }
+.stats span { font-size: 12.5px; color: var(--muted); }
+.hero-art { position: relative; height: 440px; }
+.hero-art img { position: absolute; border-radius: 16px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); border: 1px solid var(--line); background: #fff; object-fit: cover; }
+.hero-art .a1 { width: 68%; height: 62%; right: 0; top: 0; z-index: 2; }
+.hero-art .a2 { width: 60%; height: 50%; left: 0; bottom: 8%; z-index: 3; }
+.hero-art .a3 { width: 42%; height: 36%; right: 6%; bottom: 0; z-index: 1; opacity: 0.9; }
+
+/* strip */
+.strip { display: flex; flex-wrap: wrap; gap: 10px 22px; justify-content: center; padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+
+/* sections */
+section { padding: 72px 0; }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 30px; flex-wrap: wrap; }
+.section-head h2 { font-size: clamp(26px, 3vw, 36px); font-weight: 800; letter-spacing: -0.01em; }
+.section-head p { color: var(--muted); max-width: 420px; }
+
+/* filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.chip { background: var(--bg2); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-size: 14px; cursor: pointer; font-family: inherit; transition: all .15s; }
+.chip b { font-weight: 600; color: var(--accent); margin-left: 4px; }
+.chip:hover { color: var(--text); border-color: rgba(56,189,248,0.5); }
+.chip.active { background: var(--accent); color: #05203a; border-color: var(--accent); }
+.chip.active b { color: #05203a; }
+
+/* grid */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: transform .2s, border-color .2s, box-shadow .2s; display: flex; flex-direction: column; }
+.card:hover, .card:focus-visible { transform: translateY(-4px); border-color: rgba(56,189,248,0.55); box-shadow: 0 18px 40px rgba(0,0,0,0.35); outline: none; }
+.card.hide { display: none; }
+.card-img { height: 210px; background: #fff; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.22); transition: transform .4s; }
+.card-img.photo { background: #0f1419; }
+.card-img.photo img { object-fit: contain; transform: none; }
+.card:hover .card-img img { transform: scale(1.3); }
+.card:hover .card-img.photo img { transform: scale(1.04); }
+.card-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card-num { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.card h3 { font-size: 17px; font-weight: 700; }
+.card p { color: var(--muted); font-size: 14px; flex: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tags span { font-size: 11.5px; padding: 4px 9px; border-radius: 999px; background: rgba(56,189,248,0.1); color: var(--accent2); border: 1px solid rgba(56,189,248,0.2); }
+.empty { color: var(--muted); text-align: center; padding: 40px 0; }
+
+/* skills */
+.skill-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.skill { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+.skill h3 { font-size: 16px; color: var(--accent); margin-bottom: 12px; }
+.skill ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+.skill li { margin-bottom: 7px; }
+
+/* process */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
+.steps li { background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; position: relative; }
+.steps b { font-size: 13px; color: var(--accent); letter-spacing: 0.15em; }
+.steps h3 { font-size: 18px; margin: 8px 0 8px; }
+.steps p { color: var(--muted); font-size: 14.5px; }
+
+/* contact */
+.contact-card { background: linear-gradient(135deg, #12213d, #0f1a30); border: 1px solid rgba(56,189,248,0.3); border-radius: 20px; padding: 44px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: center; }
+.contact-card h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 800; }
+.contact-card p { color: var(--muted); margin-top: 14px; }
+.contact-links { display: flex; flex-direction: column; gap: 10px; }
+.contact-links .btn { justify-content: center; }
+
+.foot { max-width: var(--max); margin: 0 auto; padding: 26px 28px 40px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+
+/* modal */
+.modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-back { position: absolute; inset: 0; background: rgba(3, 8, 18, 0.85); backdrop-filter: blur(6px); }
+.modal-box { position: relative; background: var(--bg2); border: 1px solid var(--line); border-radius: 18px; width: min(1180px, 100%); height: min(92vh, 860px); display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: minmax(0, 1fr); overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+.close { position: absolute; top: 10px; right: 12px; z-index: 5; background: rgba(11,18,32,0.7); color: #fff; border: 1px solid var(--line); width: 40px; height: 40px; border-radius: 50%; font-size: 26px; cursor: pointer; line-height: 1; }
+.m-gallery { background: #0b1220; display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; }
+.m-main { position: relative; flex: 1; min-height: 0; background: #fff; display: flex; align-items: center; justify-content: center; }
+.m-main img { width: 100%; height: 100%; object-fit: contain; }
+.m-main.photo { background: #0f1419; }
+.m-prev, .m-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(11,18,32,0.75); color: #fff; border: 1px solid var(--line); width: 42px; height: 42px; border-radius: 50%; font-size: 28px; cursor: pointer; line-height: 1; }
+.m-prev { left: 12px; } .m-next { right: 12px; }
+.m-thumbs { flex: none; display: flex; gap: 8px; padding: 10px; overflow-x: auto; background: #0b1220; }
+.m-thumbs img { width: 84px; height: 56px; object-fit: cover; border-radius: 6px; border: 2px solid transparent; cursor: pointer; background: #fff; opacity: .7; flex: none; }
+.m-thumbs img.on { border-color: var(--accent); opacity: 1; }
+.m-text { padding: 30px 30px 26px; overflow-y: auto; min-height: 0; min-width: 0; }
+.m-text h2 { font-size: 24px; font-weight: 800; margin: 6px 0 4px; }
+.m-sub { color: var(--muted); margin-bottom: 12px; }
+.m-text p { color: var(--muted); font-size: 15px; margin-top: 14px; }
+.m-text h4 { margin-top: 20px; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+.m-text ul { margin: 8px 0 0; padding-left: 18px; color: var(--text); font-size: 14.5px; }
+.m-text li { margin-bottom: 6px; }
+.specs { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13.5px; }
+.specs td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--text); }
+.specs td:first-child { color: var(--accent); font-weight: 600; width: 96px; white-space: nowrap; }
+.m-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; }
+.m-nav button { background: transparent; color: var(--accent2); border: 1px solid var(--line); border-radius: 8px; padding: 9px 14px; cursor: pointer; font-family: inherit; font-size: 14px; }
+.m-nav button:hover { border-color: var(--accent); }
+body.locked { overflow: hidden; }
+[hidden] { display: none !important; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .skill-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .hero { grid-template-columns: 1fr; padding-top: 48px; }
+  .hero-art { height: 320px; }
+  .modal-box { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; max-height: 94vh; overflow-y: auto; }
+  .m-gallery { overflow: visible; }
+  .m-main { min-height: 260px; height: 46vh; flex: none; }
+  .m-text { overflow: visible; }
+}
+@media (max-width: 640px) {
+  .nav { padding: 12px 18px; }
+  .nav nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; padding: 16px 18px; background: var(--bg2); border-bottom: 1px solid var(--line); gap: 14px; }
+  .nav nav.open { display: flex; }
+  .menu { display: block; }
+  main { padding: 0 18px; }
+  .grid { grid-template-columns: 1fr; }
+  .skill-grid, .steps { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .contact-card { grid-template-columns: 1fr; padding: 28px; }
+  .hero-art { height: 240px; }
+  section { padding: 52px 0; }
+  .modal { padding: 8px; }
+  .m-text { padding: 20px; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#work">Skip to projects</a>
+<header class="nav">
+  <a class="brand" href="#top"><span class="logo"></span>Shuja Chaudhry</a>
+  <nav>
+    <a href="#work">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+    <a class="btn small" href="Shuja_Chaudhry_PCB_Portfolio.pdf" target="_blank" rel="noopener">PDF portfolio</a>
+  </nav>
+  <button class="menu" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-text">
+    <div class="kicker">PCB and Embedded Hardware Design</div>
+    <h1>Boards that go from requirements to fabrication ready files, and then actually work.</h1>
+    <p class="lead">I am Shuja Chaudhry, a Hardware Design Engineer specialising in multilayer PCB design and embedded electronics. Over 100 delivered projects: battery powered wearables, BLE and WiFi devices, sensor front ends, power management and safety critical drivers, designed in KiCad and Altium Designer.</p>
+    <div class="cta">
+      <a class="btn" href="#work">See the projects</a>
+      <a class="btn ghost" href="mailto:shujachaudhry814@gmail.com">Start a project</a>
+    </div>
+    <div class="stats">
+      <div><b>100+</b><span>PCB projects delivered</span></div>
+      <div><b>2 to 4</b><span>layer boards</span></div>
+      <div><b>18</b><span>case studies below</span></div>
+      <div><b>Remote</b><span>UK hours available</span></div>
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <img src="img/13-stm32-nrf52-secure-ble-device/render.jpg" alt="" class="a1">
+    <img src="img/16-pemf-therapy-controller-hat/render.jpg" alt="" class="a2">
+    <img src="img/02-esp32-ble-led-badge/5-render.jpg" alt="" class="a3">
+  </div>
+</section>
+
+<section class="strip">
+  <span>ESP32</span><span>STM32</span><span>nRF52</span><span>RP2040</span><span>BLE</span><span>WiFi</span><span>LoRa</span><span>CAN</span><span>USB-C</span><span>PoE</span><span>Li ion</span><span>KiCad</span><span>Altium</span><span>JLCPCB</span>
+</section>
+
+<section id="work" class="work">
+  <div class="section-head">
+    <div>
+      <div class="kicker">Selected work</div>
+      <h2>Project case studies</h2>
+    </div>
+    <p>Click any board for the full write up, 3D render, routed layout and schematic sheets.</p>
+  </div>
+  <div class="filters" role="tablist"><button class="chip active" data-filter="all">All projects <b>18</b></button><button class="chip" data-filter="wearable">Wearable and BLE <b>5</b></button><button class="chip" data-filter="power">Battery and power <b>8</b></button><button class="chip" data-filter="sensors">Sensors and analog <b>9</b></button><button class="chip" data-filter="wireless">RF and wireless <b>6</b></button><button class="chip" data-filter="fourlayer">4 layer <b>4</b></button><button class="chip" data-filter="built">Assembled and tested <b>3</b></button><button class="chip" data-filter="medical">Medical and safety <b>3</b></button></div>
+  <div class="grid">
+<article class="card" data-cats="wearable power built" data-n="1" tabindex="0" role="button" aria-label="Open ESP32 BLE Wearable Badge with 40 RGB LEDs">
+  <div class="card-img photo"><img loading="lazy" src="img/02-esp32-ble-led-badge/5-render.jpg" alt="ESP32 BLE Wearable Badge with 40 RGB LEDs 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 01</div>
+    <h3>ESP32 BLE Wearable Badge with 40 RGB LEDs</h3>
+    <p>Custom outline, LiPo powered, assembled and tested</p>
+    <div class="tags"><span>Wearable</span><span>BLE</span><span>Battery powered</span></div>
+  </div>
+</article>
+<article class="card" data-cats="wearable fourlayer medical" data-n="2" tabindex="0" role="button" aria-label="Open STM32 plus nRF52832 Secure BLE Device">
+  <div class="card-img"><img loading="lazy" src="img/13-stm32-nrf52-secure-ble-device/render.jpg" alt="STM32 plus nRF52832 Secure BLE Device 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 02</div>
+    <h3>STM32 plus nRF52832 Secure BLE Device</h3>
+    <p>Four layer, dual MCU, secure element and tamper detection</p>
+    <div class="tags"><span>BLE</span><span>STM32</span><span>nRF52</span></div>
+  </div>
+</article>
+<article class="card" data-cats="sensors medical" data-n="3" tabindex="0" role="button" aria-label="Open PEMF Therapy Controller HAT for Raspberry Pi 5">
+  <div class="card-img"><img loading="lazy" src="img/16-pemf-therapy-controller-hat/render.jpg" alt="PEMF Therapy Controller HAT for Raspberry Pi 5 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 03</div>
+    <h3>PEMF Therapy Controller HAT for Raspberry Pi 5</h3>
+    <p>Four zone pulsed electromagnetic field driver with hardware safety lockout</p>
+    <div class="tags"><span>Therapy device</span><span>Coil driver</span><span>Current monitoring</span></div>
+  </div>
+</article>
+<article class="card" data-cats="wearable sensors" data-n="4" tabindex="0" role="button" aria-label="Open BLE Motion Sensor Module with Castellated Edges">
+  <div class="card-img"><img loading="lazy" src="img/07-ble-motion-sensor-module/smartball.jpg" alt="BLE Motion Sensor Module with Castellated Edges 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 04</div>
+    <h3>BLE Motion Sensor Module with Castellated Edges</h3>
+    <p>Compact reflow ready module for a smart ball product</p>
+    <div class="tags"><span>BLE</span><span>Motion sensing</span><span>Module</span></div>
+  </div>
+</article>
+<article class="card" data-cats="power fourlayer" data-n="5" tabindex="0" role="button" aria-label="Open ESP32-S3 Portable Audio Player with Battery Management">
+  <div class="card-img"><img loading="lazy" src="img/14-esp32-s3-portable-audio-player/render.jpg" alt="ESP32-S3 Portable Audio Player with Battery Management 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 05</div>
+    <h3>ESP32-S3 Portable Audio Player with Battery Management</h3>
+    <p>Four layer, full single cell Li ion charge and protection chain</p>
+    <div class="tags"><span>Battery management</span><span>4 layer</span><span>Audio</span></div>
+  </div>
+</article>
+<article class="card" data-cats="wearable power sensors wireless" data-n="6" tabindex="0" role="button" aria-label="Open ESP32-C3 Load Cell Sensor Board with HX711">
+  <div class="card-img"><img loading="lazy" src="img/05-esp32-c3-load-cell-sensor/load-sensor.jpg" alt="ESP32-C3 Load Cell Sensor Board with HX711 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 06</div>
+    <h3>ESP32-C3 Load Cell Sensor Board with HX711</h3>
+    <p>Custom shape, quiet analog front end, wireless weight sensing</p>
+    <div class="tags"><span>Analog front end</span><span>Sensor</span><span>WiFi and BLE</span></div>
+  </div>
+</article>
+<article class="card" data-cats="sensors wireless built" data-n="7" tabindex="0" role="button" aria-label="Open ESP32 PoE IoT Gateway">
+  <div class="card-img photo"><img loading="lazy" src="img/01-esp32-poe-iot-gateway/5.jpg" alt="ESP32 PoE IoT Gateway 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 07</div>
+    <h3>ESP32 PoE IoT Gateway</h3>
+    <p>Ethernet powered multi sensor gateway, fabricated, assembled and tested</p>
+    <div class="tags"><span>PoE</span><span>Ethernet</span><span>Zigbee</span></div>
+  </div>
+</article>
+<article class="card" data-cats="wearable power wireless built" data-n="8" tabindex="0" role="button" aria-label="Open LoRa and BLE Handheld Remote Controller">
+  <div class="card-img"><img loading="lazy" src="img/11-lora-remote-controller/render.jpg" alt="LoRa and BLE Handheld Remote Controller 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 08</div>
+    <h3>LoRa and BLE Handheld Remote Controller</h3>
+    <p>Two layer, custom hand grip outline, built as a small production batch</p>
+    <div class="tags"><span>LoRa</span><span>BLE</span><span>Handheld</span></div>
+  </div>
+</article>
+<article class="card" data-cats="power fourlayer medical" data-n="9" tabindex="0" role="button" aria-label="Open ESP32-S3 Exoskeleton Controller with CAN Bus">
+  <div class="card-img"><img loading="lazy" src="img/12-esp32-s3-exoskeleton-controller/render.jpg" alt="ESP32-S3 Exoskeleton Controller with CAN Bus 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 09</div>
+    <h3>ESP32-S3 Exoskeleton Controller with CAN Bus</h3>
+    <p>Four layer, 60 V input, USB and battery power multiplexing</p>
+    <div class="tags"><span>CAN bus</span><span>4 layer</span><span>Power management</span></div>
+  </div>
+</article>
+<article class="card" data-cats="sensors wireless" data-n="10" tabindex="0" role="button" aria-label="Open ESP32-S3 Air Quality Sensor Node with Ethernet and PoE">
+  <div class="card-img"><img loading="lazy" src="img/03-esp32-s3-air-quality-sensor-node/aio-sensor.jpg" alt="ESP32-S3 Air Quality Sensor Node with Ethernet and PoE 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 10</div>
+    <h3>ESP32-S3 Air Quality Sensor Node with Ethernet and PoE</h3>
+    <p>Two layer, 99 components, seven sensors on one compact outline</p>
+    <div class="tags"><span>Sensors</span><span>PoE</span><span>Ethernet</span></div>
+  </div>
+</article>
+<article class="card" data-cats="power sensors" data-n="11" tabindex="0" role="button" aria-label="Open Raspberry Pi Pico W Sensor Carrier with GPS and IMU">
+  <div class="card-img"><img loading="lazy" src="img/18-rp2040-sensor-carrier/render.jpg" alt="Raspberry Pi Pico W Sensor Carrier with GPS and IMU 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 11</div>
+    <h3>Raspberry Pi Pico W Sensor Carrier with GPS and IMU</h3>
+    <p>Two layer outdoor tracker carrier with 18650 charging</p>
+    <div class="tags"><span>RP2040</span><span>GPS</span><span>IMU</span></div>
+  </div>
+</article>
+<article class="card" data-cats="power sensors" data-n="12" tabindex="0" role="button" aria-label="Open Battery Powered Environmental Monitoring Node">
+  <div class="card-img"><img loading="lazy" src="img/09-battery-monitoring-node/fyp-monitoring.jpg" alt="Battery Powered Environmental Monitoring Node 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 12</div>
+    <h3>Battery Powered Environmental Monitoring Node</h3>
+    <p>Two layer carrier with dual 18650 cells</p>
+    <div class="tags"><span>Battery powered</span><span>Sensors</span><span>Prototype</span></div>
+  </div>
+</article>
+<article class="card" data-cats="power sensors wireless" data-n="13" tabindex="0" role="button" aria-label="Open ESP32-S3 Smart AC Controller with IR and Climate Sensing">
+  <div class="card-img"><img loading="lazy" src="img/04-esp32-s3-ac-controller/ac-controller.jpg" alt="ESP32-S3 Smart AC Controller with IR and Climate Sensing 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 13</div>
+    <h3>ESP32-S3 Smart AC Controller with IR and Climate Sensing</h3>
+    <p>Two layer WiFi controller sized for a small wall enclosure</p>
+    <div class="tags"><span>WiFi</span><span>IR</span><span>Thermal array</span></div>
+  </div>
+</article>
+<article class="card" data-cats="wireless" data-n="14" tabindex="0" role="button" aria-label="Open LoRa RF Board with SMA Antenna">
+  <div class="card-img"><img loading="lazy" src="img/08-lora-rf-board/lora.jpg" alt="LoRa RF Board with SMA Antenna 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 14</div>
+    <h3>LoRa RF Board with SMA Antenna</h3>
+    <p>RF layout following the transceiver reference chain</p>
+    <div class="tags"><span>RF</span><span>LoRa</span><span>SMA</span></div>
+  </div>
+</article>
+<article class="card" data-cats="" data-n="15" tabindex="0" role="button" aria-label="Open ESP32 Power Quality Monitoring System">
+  <div class="card-img"><img loading="lazy" src="img/06-esp32-power-quality-monitor/pqms.jpg" alt="ESP32 Power Quality Monitoring System 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 15</div>
+    <h3>ESP32 Power Quality Monitoring System</h3>
+    <p>Mains measurement front end with isolation and protection</p>
+    <div class="tags"><span>Mains</span><span>Isolation</span><span>Measurement</span></div>
+  </div>
+</article>
+<article class="card" data-cats="sensors fourlayer" data-n="16" tabindex="0" role="button" aria-label="Open Vehicle LED Lighting Controller">
+  <div class="card-img"><img loading="lazy" src="img/15-vehicle-led-lighting-controller/render.jpg" alt="Vehicle LED Lighting Controller 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 16</div>
+    <h3>Vehicle LED Lighting Controller</h3>
+    <p>Four layer, 20 A, six high side MOSFET outputs</p>
+    <div class="tags"><span>Automotive</span><span>4 layer</span><span>High current</span></div>
+  </div>
+</article>
+<article class="card" data-cats="" data-n="17" tabindex="0" role="button" aria-label="Open Isolated Relay and Servo Boards for a Launcher Platform">
+  <div class="card-img"><img loading="lazy" src="img/17-retriever-platform-boards/aeropro4.jpg" alt="Isolated Relay and Servo Boards for a Launcher Platform 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 17</div>
+    <h3>Isolated Relay and Servo Boards for a Launcher Platform</h3>
+    <p>Three two layer boards sharing one controller pinout</p>
+    <div class="tags"><span>Solid state relays</span><span>Servo outputs</span><span>Field wiring</span></div>
+  </div>
+</article>
+<article class="card" data-cats="" data-n="18" tabindex="0" role="button" aria-label="Open 12 V Industrial Tap Detector Board">
+  <div class="card-img"><img loading="lazy" src="img/10-tap-detector-12v/tap-detector.jpg" alt="12 V Industrial Tap Detector Board 3D render"></div>
+  <div class="card-body">
+    <div class="card-num">Project 18</div>
+    <h3>12 V Industrial Tap Detector Board</h3>
+    <p>Rugged sensing board with a socketed control module</p>
+    <div class="tags"><span>Industrial</span><span>12 V</span><span>Filtering</span></div>
+  </div>
+</article></div>
+  <p class="empty" hidden>No projects in this group.</p>
+</section>
+
+<section id="skills" class="skills">
+  <div class="section-head"><div><div class="kicker">Capabilities</div><h2>What I bring to a hardware team</h2></div></div>
+  <div class="skill-grid">
+    <div class="skill"><h3>PCB design</h3><ul><li>Schematic capture and multilayer layout, 2 to 4 layers shown here</li><li>KiCad and Altium Designer</li><li>Custom outlines, castellated modules, HAT and carrier boards</li><li>DRC clean layouts inside JLCPCB and PCBWay assembly rules</li><li>Impedance aware routing for USB, RF and high speed lines</li></ul></div>
+    <div class="skill"><h3>Embedded platforms</h3><ul><li>ESP32, ESP32-S3, ESP32-C3, STM32G0, nRF52832, RP2040</li><li>Bluetooth Low Energy, WiFi, LoRa, Zigbee, 433 MHz, Ethernet with PoE</li><li>UART, SPI, I2C, I2S, CAN, USB</li><li>Firmware bring up support and test firmware</li></ul></div>
+    <div class="skill"><h3>Power and analog</h3><ul><li>Li ion and LiPo charging, protection and power path</li><li>Buck, boost and buck boost converters, LDOs, power multiplexing</li><li>Load cell, current sense, temperature, motion and gas sensor front ends</li><li>ESD, TVS, polyfuse and reverse polarity protection</li></ul></div>
+    <div class="skill"><h3>Deliverables</h3><ul><li>Schematics with design notes</li><li>Gerbers, drill files and stack up notes</li><li>BOM with manufacturer part numbers and stock check</li><li>Pick and place files and assembly drawings</li><li>Bring up plan, test points and design review notes</li></ul></div>
+  </div>
+</section>
+
+<section id="process" class="process">
+  <div class="section-head"><div><div class="kicker">How I work</div><h2>From idea to a board in your hand</h2></div></div>
+  <ol class="steps">
+    <li><b>01</b><h3>Requirements</h3><p>Block diagram, interfaces, power budget, size and cost targets agreed up front.</p></li>
+    <li><b>02</b><h3>Parts and BOM</h3><p>Component selection against stock and assembly capability so nothing needs a redesign later.</p></li>
+    <li><b>03</b><h3>Schematic</h3><p>Clean, annotated schematics with a review pass before any layout starts.</p></li>
+    <li><b>04</b><h3>Layout</h3><p>Stack up, placement, routing, DRC and DFM checks with renders shared as it progresses.</p></li>
+    <li><b>05</b><h3>Fab package</h3><p>Gerbers, drill, BOM, pick and place and assembly drawings ready for the fab house.</p></li>
+    <li><b>06</b><h3>Bring up</h3><p>Test plan, first power up support and fixes for the next revision.</p></li>
+  </ol>
+</section>
+
+<section id="contact" class="contact">
+  <div class="contact-card">
+    <div>
+      <div class="kicker">Contact</div>
+      <h2>Have a board that needs designing?</h2>
+      <p>I work remotely and can align with UK and European hours. Happy to begin with a scoped evaluation task so you can judge the work on real output.</p>
+    </div>
+    <div class="contact-links">
+      <a class="btn" href="mailto:shujachaudhry814@gmail.com">shujachaudhry814@gmail.com</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/shuja-chaudhry-pcbdesign" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn ghost" href="https://www.fiverr.com/users/shuja_chaudhry/portfolio" target="_blank" rel="noopener">Fiverr</a>
+      <a class="btn ghost" href="https://github.com/Shuja848" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn ghost" href="Shuja_Chaudhry_PCB_Portfolio.pdf" target="_blank" rel="noopener">Download PDF portfolio</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span>Shuja Chaudhry, Hardware Design Engineer, PCB and Embedded Systems</span>
+  <span>Native KiCad files, Gerbers and BOMs available on request, subject to client confidentiality.</span>
+</footer>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="modal-back" data-close></div>
+  <div class="modal-box">
+    <button class="close" data-close aria-label="Close">&times;</button>
+    <div class="m-gallery">
+      <div class="m-main"><button class="m-prev" aria-label="Previous image">&#8249;</button><img id="m-img" alt=""><button class="m-next" aria-label="Next image">&#8250;</button></div>
+      <div class="m-thumbs" id="m-thumbs"></div>
+    </div>
+    <div class="m-text">
+      <div class="card-num" id="m-num"></div>
+      <h2 id="m-title"></h2>
+      <p class="m-sub" id="m-sub"></p>
+      <div class="tags" id="m-tags"></div>
+      <p id="m-desc"></p>
+      <h4>Key design points</h4>
+      <ul id="m-points"></ul>
+      <table class="specs" id="m-specs"></table>
+      <div class="m-nav"><button id="m-prevp">&#8249; Previous project</button><button id="m-nextp">Next project &#8250;</button></div>
+    </div>
+  </div>
+</div>
+
+<script>window.PROJECTS = [{"n":1,"title":"ESP32 BLE Wearable Badge with 40 RGB LEDs","subtitle":"Custom outline, LiPo powered, assembled and tested","tags":["Wearable","BLE","Battery powered","Assembled and tested"],"desc":"Custom outline PCB for a wearable ESP32 badge with BLE and 40 addressable RGB LEDs, running from USB-C or an onboard LiPo cell. The hard part was power: a buck boost converter holds the 5 V LED rail steady as the battery drops below 5 V, the ESP32 runs from its own 3.3 V rail so LED switching current never reaches the MCU, and power path switching hands over between USB and battery without a glitch or a reset. Part choice and layout were kept inside JLCPCB assembly capability so the board could be built without redesign. The photos show the assembled board running colour animations from the battery.","points":["Buck boost converter keeps the LED rail stable across the full LiPo discharge curve","Separate 3.3 V MCU rail isolates the radio and processor from LED switching noise","Seamless USB to battery power path handover with no brownout or reset"],"specs":{"Platform":"ESP32 with BLE","Board":"Custom outline, JLCPCB assembly ready","Interfaces":"USB-C, addressable LED chain, I2C header","Power":"USB-C or single cell LiPo, buck boost 5 V rail, 3.3 V MCU rail","Delivered":"Schematic, layout, Gerbers, BOM, assembled prototype"},"images":["img/02-esp32-ble-led-badge/5-render.jpg","img/02-esp32-ble-led-badge/1.jpg","img/02-esp32-ble-led-badge/2.jpg","img/02-esp32-ble-led-badge/4.jpg","img/02-esp32-ble-led-badge/3.jpg"],"cats":["wearable","power","built"],"photo":true,"hero":"img/02-esp32-ble-led-badge/5-render.jpg"},{"n":2,"title":"STM32 plus nRF52832 Secure BLE Device","subtitle":"Four layer, dual MCU, secure element and tamper detection","tags":["BLE","STM32","nRF52","4 layer","Security"],"desc":"Four layer KiCad PCB design for a dual MCU secure BLE product. An STM32G0B1 handles the application and a Raytac MDBT42Q nRF52832 module handles Bluetooth, with an ATECC608A secure element for key storage and a tamper switch. SY8089A buck from USB-C to 3.3 V, TPS3823 supervisor for clean resets, 32.768 kHz crystal, TFT LCD connector, and separate SWD headers for both processors. 72 components, USB-C with ESD protection and a polyfuse.","points":["Certified BLE module keeps the RF section out of the critical path for approvals","Hardware secure element and tamper input for key storage and intrusion detection","Supervisor and low noise regulation for reliable resets on a small battery style rail"],"specs":{"Platform":"STM32G0B1 and nRF52832 (Raytac MDBT42Q)","Board":"4 layer, 72 components","Tool":"KiCad","Interfaces":"BLE, SWD x2, TFT LCD connector, USB-C","Power":"USB-C input, SY8089A buck to 3.3 V, TPS3823 supervisor, polyfuse and ESD","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/13-stm32-nrf52-secure-ble-device/render.jpg","img/13-stm32-nrf52-secure-ble-device/layout.jpg","img/13-stm32-nrf52-secure-ble-device/schematic-4.jpg","img/13-stm32-nrf52-secure-ble-device/schematic-2.jpg","img/13-stm32-nrf52-secure-ble-device/schematic-3.jpg"],"cats":["wearable","fourlayer","medical"],"photo":false,"hero":"img/13-stm32-nrf52-secure-ble-device/render.jpg"},{"n":3,"title":"PEMF Therapy Controller HAT for Raspberry Pi 5","subtitle":"Four zone pulsed electromagnetic field driver with hardware safety lockout","tags":["Therapy device","Coil driver","Current monitoring","Safety lockout"],"desc":"Two layer KiCad PCB design for a Raspberry Pi 5 HAT that drives four pulsed electromagnetic field coils, one each for head, chest, torso and legs. Each zone has a TLC555 timing stage, TC4427 gate driver and IRFS4127 power MOSFET with hardware lockout and enable request lines so the Pi cannot leave a coil on. INA3221 three channel current monitoring, two vibration motor drivers, a CC1101 433 MHz transceiver, L7805 regulator from a 12 V supply, 74HCT logic and TVS protection. 130 components.","points":["Hardware interlock per coil so software faults cannot leave a therapy output energised","Per channel current monitoring for closed loop control and fault reporting","Vibration motor drivers and a sub GHz radio on the same board for a complete treatment controller"],"specs":{"Platform":"Raspberry Pi 5 HAT, TLC555 timing, TC4427 drivers","Board":"2 layer, 130 components","Tool":"KiCad","Interfaces":"Pi 40 pin header, I2C (INA3221), SPI (CC1101), coil outputs x4","Power":"12 V input, L7805 5 V rail, TVS protection","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/16-pemf-therapy-controller-hat/render.jpg","img/16-pemf-therapy-controller-hat/layout.jpg","img/16-pemf-therapy-controller-hat/schematic-1.jpg"],"cats":["sensors","medical"],"photo":false,"hero":"img/16-pemf-therapy-controller-hat/render.jpg"},{"n":4,"title":"BLE Motion Sensor Module with Castellated Edges","subtitle":"Compact reflow ready module for a smart ball product","tags":["BLE","Motion sensing","Module","Compact"],"desc":"Compact castellated PCB module for a smart ball product: BLE SoC with crystal and antenna, motion sensing ICs, SWD debug pads and a single row of castellated pins so the module can be soldered directly onto a carrier board. Antenna keep out, ground plane and battery rails were planned together because in a module this small each one constrains the others. Designed for reflow assembly.","points":["Antenna keep out and ground plane planned together on a very small outline","Castellated edge so the same module drops onto different carrier boards","Motion sensing front end laid out for low noise on a battery rail"],"specs":{"Platform":"BLE SoC with onboard antenna","Board":"Castellated module, reflow assembly","Interfaces":"SWD debug pads, castellated I/O row","Power":"Battery rail with local regulation","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/07-ble-motion-sensor-module/smartball.jpg"],"cats":["wearable","sensors"],"photo":false,"hero":"img/07-ble-motion-sensor-module/smartball.jpg"},{"n":5,"title":"ESP32-S3 Portable Audio Player with Battery Management","subtitle":"Four layer, full single cell Li ion charge and protection chain","tags":["Battery management","4 layer","Audio","USB-C"],"desc":"Four layer KiCad PCB design for a battery powered audio device. ESP32-S3-WROOM-1 N16R8 drives a MAX98357A I2S class D amplifier, with a microSD slot for audio files and a CP2102N USB to UART bridge for programming. Full single cell Li ion chain on board: TP4056 charger with the current set resistor documented, DW01 and FS8205A protection, MT3608 boost for the speaker rail and an AMS1117 3.3 V rail, plus a slide power switch and USB-C. 73 components.","points":["Complete charge, protect and boost chain for a single Li ion cell","Amplifier and boost converter placed away from the antenna and analog paths","Programming bridge and card slot on board for a self contained product"],"specs":{"Platform":"ESP32-S3-WROOM-1 N16R8","Board":"4 layer, 73 components","Tool":"KiCad","Interfaces":"I2S audio, microSD, USB-C, UART bridge","Power":"TP4056 charger, DW01 and FS8205A protection, MT3608 boost, AMS1117 3.3 V","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/14-esp32-s3-portable-audio-player/render.jpg","img/14-esp32-s3-portable-audio-player/layout.jpg","img/14-esp32-s3-portable-audio-player/schematic-1.jpg"],"cats":["power","fourlayer"],"photo":false,"hero":"img/14-esp32-s3-portable-audio-player/render.jpg"},{"n":6,"title":"ESP32-C3 Load Cell Sensor Board with HX711","subtitle":"Custom shape, quiet analog front end, wireless weight sensing","tags":["Analog front end","Sensor","WiFi and BLE","USB-C"],"desc":"Custom shape two layer PCB in KiCad for a wireless weight sensor: ESP32-C3-MINI module, HX711 24 bit load cell amplifier, USB-C power and programming, ESD protection on the USB lines and a connector for the load cell. The analog front end sits on its own quiet area of the board, away from the switching regulator and the antenna keep out. 72 components on a custom outline.","points":["24 bit bridge amplifier placed in a dedicated low noise region","Regulator and antenna keep out kept clear of the measurement path","ESD protected USB-C for both power and programming"],"specs":{"Platform":"ESP32-C3-MINI","Board":"2 layer, custom outline, 72 components","Tool":"KiCad","Interfaces":"HX711 bridge input, USB-C, UART","Power":"USB-C 5 V, 3.3 V regulator","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/05-esp32-c3-load-cell-sensor/load-sensor.jpg","img/05-esp32-c3-load-cell-sensor/layout.jpg","img/05-esp32-c3-load-cell-sensor/schematic.jpg"],"cats":["wearable","power","sensors","wireless"],"photo":false,"hero":"img/05-esp32-c3-load-cell-sensor/load-sensor.jpg"},{"n":7,"title":"ESP32 PoE IoT Gateway","subtitle":"Ethernet powered multi sensor gateway, fabricated, assembled and tested","tags":["PoE","Ethernet","Zigbee","Sensors","Assembled and tested"],"desc":"Custom PCB design for an ESP32 IoT gateway powered over Ethernet. One cable carries power and data, so the PoE front end, the W5500 Ethernet controller, a Zigbee radio and a multi sensor package (CO2, gas, temperature, humidity, light, pressure) all share one compact board. The switching supply was floorplanned away from the radio, and the sensors were placed by distance from self heating parts, because a temperature reading is only as good as its placement. The photos show the board as returned from manufacturing and powered up.","points":["PoE front end and Ethernet controller integrated with a radio on one compact board","Thermal aware sensor placement for accurate temperature readings","Full fabrication package delivered and verified on real hardware"],"specs":{"Platform":"ESP32 with W5500 Ethernet and Zigbee radio","Board":"Compact multi sensor gateway","Interfaces":"Ethernet with PoE, Zigbee, I2C sensors, UART","Power":"PoE input, isolated switching supply, 3.3 V rail","Delivered":"Schematic, layout, Gerbers, BOM, pick and place, tested prototype"},"images":["img/01-esp32-poe-iot-gateway/5.jpg","img/01-esp32-poe-iot-gateway/1.jpg","img/01-esp32-poe-iot-gateway/2.jpg","img/01-esp32-poe-iot-gateway/3.jpg","img/01-esp32-poe-iot-gateway/4.jpg"],"cats":["sensors","wireless","built"],"photo":true,"hero":"img/01-esp32-poe-iot-gateway/5.jpg"},{"n":8,"title":"LoRa and BLE Handheld Remote Controller","subtitle":"Two layer, custom hand grip outline, built as a small production batch","tags":["LoRa","BLE","Handheld","USB-C charging","Production batch"],"desc":"Two layer KiCad PCB design for the HF-RC1 handheld remote of the Happy Fellow dog ball launcher platform. A LoRa module for long range control and an HM-11 BLE module for phone pairing share one board with six tactile buttons (arm, fire and mode), status LEDs for power, low battery and Bluetooth, USB-C charging and a JST battery connector. A P channel load switch and BSS138 level shifters keep the radios on their own rails. 67 components on a custom outline shaped to the hand grip.","points":["Two radios on one board with independent switched rails","Outline shaped to the enclosure and hand grip","Delivered and manufactured as a small production run"],"specs":{"Platform":"LoRa module and HM-11 BLE module","Board":"2 layer, custom outline, 67 components","Tool":"KiCad","Interfaces":"LoRa, BLE, UART, six tactile inputs, status LEDs","Power":"USB-C charging, JST battery input, P channel load switch","Delivered":"Schematic, layout, Gerbers, BOM, production batch"},"images":["img/11-lora-remote-controller/render.jpg","img/11-lora-remote-controller/layout.jpg","img/11-lora-remote-controller/schematic-1.jpg"],"cats":["wearable","power","wireless","built"],"photo":false,"hero":"img/11-lora-remote-controller/render.jpg"},{"n":9,"title":"ESP32-S3 Exoskeleton Controller with CAN Bus","subtitle":"Four layer, 60 V input, USB and battery power multiplexing","tags":["CAN bus","4 layer","Power management","Medical robotics"],"desc":"Four layer KiCad PCB design for the control board of a powered exoskeleton. ESP32-S3-WROOM-1 with a TPS54560 60 V synchronous buck taking the battery pack down to 5 V, an AMS1117 3.3 V rail and a TPS2115A power multiplexer that switches between USB-C and battery without a reset. CAN bus through a TJA1051 transceiver with split termination and PESD2CANFD surge protection, XT60 and XT30 power connectors, a hardware kill switch, polyfuse and ESD protection on USB. 88 components.","points":["High voltage synchronous buck with tight loop layout on a 4 layer stack","Glitch free power multiplexing between USB and the battery pack","Protected CAN interface and hardware kill switch for a safety critical actuator system"],"specs":{"Platform":"ESP32-S3-WROOM-1","Board":"4 layer, 88 components","Tool":"KiCad","Interfaces":"CAN (TJA1051), USB-C, XT60 and XT30 power","Power":"TPS54560 60 V buck, AMS1117 3.3 V, TPS2115A power mux, polyfuse, ESD","Delivered":"Schematic, layout, Gerbers, BOM, pick and place"},"images":["img/12-esp32-s3-exoskeleton-controller/render.jpg","img/12-esp32-s3-exoskeleton-controller/layout.jpg","img/12-esp32-s3-exoskeleton-controller/schematic-2.jpg","img/12-esp32-s3-exoskeleton-controller/schematic-1.jpg","img/12-esp32-s3-exoskeleton-controller/schematic-3.jpg"],"cats":["power","fourlayer","medical"],"photo":false,"hero":"img/12-esp32-s3-exoskeleton-controller/render.jpg"},{"n":10,"title":"ESP32-S3 Air Quality Sensor Node with Ethernet and PoE","subtitle":"Two layer, 99 components, seven sensors on one compact outline","tags":["Sensors","PoE","Ethernet","Radar"],"desc":"Two layer PCB design in KiCad for an all in one indoor air quality node: ESP32-S3, SCD40 CO2 sensor, BME680 gas, temperature, humidity and pressure, BH1750 light, SDS011 particulate sensor and a 24 GHz presence radar, with W5500 Ethernet and PoE power on the same board. 99 components on a compact outline with an RJ45 magjack, USB-C for programming and pin headers for the sensor modules. DRC clean layout.","points":["Seven sensing functions integrated on a compact two layer board","Ethernet, PoE and WiFi on the same design without interference","Module headers so sensors can be swapped during evaluation"],"specs":{"Platform":"ESP32-S3","Board":"2 layer, 99 components","Tool":"KiCad","Interfaces":"Ethernet with PoE, I2C sensors, UART (SDS011, radar), USB-C","Power":"PoE input, 5 V and 3.3 V rails","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/03-esp32-s3-air-quality-sensor-node/aio-sensor.jpg","img/03-esp32-s3-air-quality-sensor-node/layout.jpg","img/03-esp32-s3-air-quality-sensor-node/schematic.jpg"],"cats":["sensors","wireless"],"photo":false,"hero":"img/03-esp32-s3-air-quality-sensor-node/aio-sensor.jpg"},{"n":11,"title":"Raspberry Pi Pico W Sensor Carrier with GPS and IMU","subtitle":"Two layer outdoor tracker carrier with 18650 charging","tags":["RP2040","GPS","IMU","Battery powered"],"desc":"Two layer KiCad carrier board for a Raspberry Pi Pico W outdoor tracker. Footprints for a NEO-6M GPS module with antenna, a BerryIMU v3 (LSM6DSL accelerometer and gyroscope, LIS3MDL magnetometer), BME680 environmental sensor and a microSD socket with card detect, plus an 18650 cell holder with TP4056 charging, boost converter and power switch. Test points and mounting holes for the enclosure. 31 components, designed for hand assembly.","points":["Motion, position and environmental sensing on one carrier","Single cell charge and boost chain for long outdoor run time","Test points and enclosure mounting planned from the start"],"specs":{"Platform":"Raspberry Pi Pico W (RP2040)","Board":"2 layer, 31 components","Tool":"KiCad","Interfaces":"UART GPS, I2C IMU and BME680, SPI microSD","Power":"18650 cell, TP4056 charger, boost converter","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/18-rp2040-sensor-carrier/render.jpg","img/18-rp2040-sensor-carrier/layout.jpg","img/18-rp2040-sensor-carrier/schematic-1.jpg"],"cats":["power","sensors"],"photo":false,"hero":"img/18-rp2040-sensor-carrier/render.jpg"},{"n":12,"title":"Battery Powered Environmental Monitoring Node","subtitle":"Two layer carrier with dual 18650 cells","tags":["Battery powered","Sensors","Prototype"],"desc":"Two layer carrier PCB for a battery powered monitoring node: ESP32 development module, dual 18650 cell holders, motion sensor, temperature and humidity sensor, status LED and connectors for external probes. Designed for quick prototype assembly by hand and for a long run time from the two cells.","points":["Dual cell holder layout with the sensors kept away from the cells","Hand assembly friendly footprints for fast prototype turns","External probe connectors for field measurements"],"specs":{"Platform":"ESP32 development module","Board":"2 layer carrier","Interfaces":"I2C sensors, probe connectors, status LED","Power":"Dual 18650 cells","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/09-battery-monitoring-node/fyp-monitoring.jpg"],"cats":["power","sensors"],"photo":false,"hero":"img/09-battery-monitoring-node/fyp-monitoring.jpg"},{"n":13,"title":"ESP32-S3 Smart AC Controller with IR and Climate Sensing","subtitle":"Two layer WiFi controller sized for a small wall enclosure","tags":["WiFi","IR","Thermal array","USB-C"],"desc":"Two layer KiCad PCB design for a WiFi air conditioner controller built around the ESP32-S3-WROOM-1. USB-C input with an AMS1117 3.3 V rail, IR transmitter and receiver for controlling and learning remote codes, a DHT22 temperature and humidity sensor and an AMG8833 thermal array, with test points and a header for programming. 41 components, four mounting holes, sized for a small wall enclosure.","points":["IR transmit and learn path with a thermal camera on a small board","Programming header and test points for easy bring up","Ready for JLCPCB fabrication and assembly"],"specs":{"Platform":"ESP32-S3-WROOM-1","Board":"2 layer, 41 components","Tool":"KiCad","Interfaces":"IR TX and RX, I2C (AMG8833), single wire DHT22, USB-C","Power":"USB-C 5 V, AMS1117 3.3 V","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/04-esp32-s3-ac-controller/ac-controller.jpg","img/04-esp32-s3-ac-controller/layout.jpg","img/04-esp32-s3-ac-controller/schematic.jpg"],"cats":["power","sensors","wireless"],"photo":false,"hero":"img/04-esp32-s3-ac-controller/ac-controller.jpg"},{"n":14,"title":"LoRa RF Board with SMA Antenna","subtitle":"RF layout following the transceiver reference chain","tags":["RF","LoRa","SMA"],"desc":"RF PCB design for a LoRa radio board: transceiver, matching network and filter laid out on a short RF path to an edge mount SMA connector, with a tight decoupling array on the supply. Ground stitching and component placement follow the RF chain so the layout matches the reference design behaviour.","points":["Short controlled RF path from transceiver to SMA connector","Ground stitching around the matching network and filter","Decoupling placed for clean supply at the radio"],"specs":{"Platform":"LoRa transceiver","Board":"RF board with edge mount SMA","Interfaces":"SPI to host, RF out","Power":"Regulated 3.3 V with local decoupling","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/08-lora-rf-board/lora.jpg"],"cats":["wireless"],"photo":false,"hero":"img/08-lora-rf-board/lora.jpg"},{"n":15,"title":"ESP32 Power Quality Monitoring System","subtitle":"Mains measurement front end with isolation and protection","tags":["Mains","Isolation","Measurement","Relay"],"desc":"PCB design for a mains power quality monitor: ESP32 module, voltage and current measurement front end, isolation and protection on the mains facing side, screw terminals for the sensing inputs, relay output and a continuously powered supply section. Measurement and logic grounds are kept separate on the layout so readings stay clean.","points":["Clear separation between mains facing and logic sections","Split grounds for accurate voltage and current measurement","Relay output and screw terminals for installation use"],"specs":{"Platform":"ESP32 module","Board":"Isolated measurement board","Tool":"KiCad","Interfaces":"Voltage and current sense inputs, relay output, UART","Power":"Always on supply section","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/06-esp32-power-quality-monitor/pqms.jpg"],"cats":[],"photo":false,"hero":"img/06-esp32-power-quality-monitor/pqms.jpg"},{"n":16,"title":"Vehicle LED Lighting Controller","subtitle":"Four layer, 20 A, six high side MOSFET outputs","tags":["Automotive","4 layer","High current","Protection"],"desc":"Four layer KiCad PCB design for an automotive LED lighting control module. Head, tail, brake, left and right turn and horn outputs are switched by BSC146N10LS5 100 V MOSFETs from a 20 pin JST harness connector, with an MP9929 synchronous buck controller for the system rail, an LR8N8 high voltage linear regulator, a 20 A fuse, SMAJ5.0CA transient suppression and Zener clamped gate drives. 121 components with a full stock checked BOM.","points":["Copper and via planning for 20 A on a 4 layer stack","Transient and reverse protection for a vehicle electrical environment","Stock checked BOM so the board can be assembled straight away"],"specs":{"Platform":"MP9929 buck controller, MOSFET outputs","Board":"4 layer, 121 components","Tool":"KiCad","Interfaces":"20 pin JST harness, six switched outputs","Power":"12 V vehicle supply, 20 A fuse, SMAJ5.0CA TVS","Delivered":"Schematic, layout, Gerbers, BOM, pick and place"},"images":["img/15-vehicle-led-lighting-controller/render.jpg","img/15-vehicle-led-lighting-controller/layout.jpg","img/15-vehicle-led-lighting-controller/schematic-1.jpg"],"cats":["sensors","fourlayer"],"photo":false,"hero":"img/15-vehicle-led-lighting-controller/render.jpg"},{"n":17,"title":"Isolated Relay and Servo Boards for a Launcher Platform","subtitle":"Three two layer boards sharing one controller pinout","tags":["Solid state relays","Servo outputs","Field wiring","Product family"],"desc":"Three two layer KiCad boards for the Happy Fellow dog ball launcher. AeroPro4 is a four channel launcher driver with CPC1706Y 4 A solid state relays and TLP240A photo MOSFET inputs. ServoPro12 is a twelve channel servo output board. AeroPro Retrofit combines launcher, speaker and controller headers on one board to upgrade older units. All three use Wago 734 series push in terminals for tool free field wiring and share one connector pinout so they plug into the same controller. 50 to 92 components each.","points":["Optically isolated inputs and solid state relay outputs","One shared pinout across a family of three boards","Tool free push in terminals for installation in the field"],"specs":{"Platform":"CPC1706Y relays, TLP240A inputs, servo drivers","Board":"2 layer, 50 to 92 components each","Tool":"KiCad","Interfaces":"Isolated inputs, relay outputs, 12 servo channels, Wago 734 terminals","Power":"Isolated field supply, logic supply","Delivered":"Schematics, layouts, Gerbers, BOMs"},"images":["img/17-retriever-platform-boards/aeropro4.jpg","img/17-retriever-platform-boards/servopro12.jpg","img/17-retriever-platform-boards/aeropro-retrofit.jpg","img/17-retriever-platform-boards/layout.jpg","img/17-retriever-platform-boards/schematic-1.jpg"],"cats":[],"photo":false,"hero":"img/17-retriever-platform-boards/aeropro4.jpg"},{"n":18,"title":"12 V Industrial Tap Detector Board","subtitle":"Rugged sensing board with a socketed control module","tags":["Industrial","12 V","Filtering","Serviceable"],"desc":"PCB design for a 12 V industrial sensing board: screw terminal power input with bulk electrolytic filtering, regulated rails, test points, mounting holes and a socketed header for the control module so it can be swapped without desoldering. Laid out for a rugged enclosure with all connections on one edge.","points":["Bulk filtering and regulation for a noisy 12 V industrial supply","Socketed control module for serviceability","Single edge connections for a rugged enclosure"],"specs":{"Platform":"Socketed control module","Board":"Industrial sensing board","Interfaces":"Screw terminals, sensor inputs, test points","Power":"12 V input, filtered and regulated rails","Delivered":"Schematic, layout, Gerbers, BOM"},"images":["img/10-tap-detector-12v/tap-detector.jpg"],"cats":[],"photo":false,"hero":"img/10-tap-detector-12v/tap-detector.jpg"}];</script>
+<script>(function () {
+  var projects = window.PROJECTS || [];
+  var byN = {};
+  projects.forEach(function (p) { byN[p.n] = p; });
+
+  // mobile menu
+  var menu = document.querySelector('.menu');
+  var nav = document.querySelector('.nav nav');
+  menu.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    menu.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.addEventListener('click', function (e) { if (e.target.tagName === 'A') nav.classList.remove('open'); });
+
+  // filters
+  var chips = document.querySelectorAll('.chip');
+  var cards = document.querySelectorAll('.card');
+  var empty = document.querySelector('.empty');
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.classList.remove('active'); });
+      chip.classList.add('active');
+      var f = chip.getAttribute('data-filter');
+      var shown = 0;
+      cards.forEach(function (card) {
+        var ok = f === 'all' || (' ' + card.getAttribute('data-cats') + ' ').indexOf(' ' + f + ' ') >= 0;
+        card.classList.toggle('hide', !ok);
+        if (ok) shown++;
+      });
+      empty.hidden = shown > 0;
+    });
+  });
+
+  // modal
+  var modal = document.getElementById('modal');
+  var mImg = document.getElementById('m-img');
+  var mThumbs = document.getElementById('m-thumbs');
+  var mMain = document.querySelector('.m-main');
+  var current = null, imgIndex = 0;
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function showImage(i) {
+    imgIndex = (i + current.images.length) % current.images.length;
+    mImg.src = current.images[imgIndex];
+    mImg.alt = current.title + ' image ' + (imgIndex + 1);
+    mMain.classList.toggle('photo', current.photo && imgIndex > 0);
+    var thumbs = mThumbs.querySelectorAll('img');
+    thumbs.forEach(function (t, k) { t.classList.toggle('on', k === imgIndex); });
+    if (thumbs[imgIndex]) thumbs[imgIndex].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  }
+
+  function open(n) {
+    current = byN[n];
+    if (!current) return;
+    document.getElementById('m-num').textContent = 'Project ' + String(current.n).padStart(2, '0') + ' of ' + projects.length;
+    document.getElementById('m-title').textContent = current.title;
+    document.getElementById('m-sub').textContent = current.subtitle;
+    document.getElementById('m-tags').innerHTML = current.tags.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('');
+    document.getElementById('m-desc').textContent = current.desc;
+    document.getElementById('m-points').innerHTML = current.points.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
+    document.getElementById('m-specs').innerHTML = Object.keys(current.specs).map(function (k) { return '<tr><td>' + esc(k) + '</td><td>' + esc(current.specs[k]) + '</td></tr>'; }).join('');
+    mThumbs.innerHTML = current.images.map(function (src, k) { return '<img src="' + src + '" alt="" data-k="' + k + '">'; }).join('');
+    mThumbs.querySelectorAll('img').forEach(function (t) { t.addEventListener('click', function () { showImage(+t.getAttribute('data-k')); }); });
+    showImage(0);
+    modal.hidden = false;
+    document.body.classList.add('locked');
+    document.querySelector('.m-text').scrollTop = 0;
+    if (history.replaceState) history.replaceState(null, '', '#project-' + n);
+  }
+
+  function close() {
+    modal.hidden = true;
+    document.body.classList.remove('locked');
+    if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+  }
+
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () { open(+card.getAttribute('data-n')); });
+    card.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(+card.getAttribute('data-n')); } });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function (el) { el.addEventListener('click', close); });
+  document.querySelector('.m-prev').addEventListener('click', function () { showImage(imgIndex - 1); });
+  document.querySelector('.m-next').addEventListener('click', function () { showImage(imgIndex + 1); });
+  document.getElementById('m-prevp').addEventListener('click', function () { open(current.n === 1 ? projects.length : current.n - 1); });
+  document.getElementById('m-nextp').addEventListener('click', function () { open(current.n === projects.length ? 1 : current.n + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (modal.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') showImage(imgIndex - 1);
+    if (e.key === 'ArrowRight') showImage(imgIndex + 1);
+  });
+
+  // deep link: index.html#project-3 opens that project
+  var m = location.hash.match(/^#project-(\d+)$/);
+  if (m && byN[+m[1]]) open(+m[1]);
+})();
+</script>
+</body>
+</html>
