@@ -84,7 +84,7 @@ const html = `<!DOCTYPE html>
     </div>
     <div class="stats">
       <div><b>100+</b><span>PCB projects delivered</span></div>
-      <div><b>2 to 4</b><span>layer boards</span></div>
+      <div><b>Multilayer</b><span>PCB design</span></div>
       <div><b>${data.length}</b><span>case studies below</span></div>
       <div><b>Remote</b><span>UK hours available</span></div>
     </div>
@@ -116,7 +116,7 @@ const html = `<!DOCTYPE html>
 <section id="skills" class="skills">
   <div class="section-head"><div><div class="kicker">Capabilities</div><h2>What I bring to a hardware team</h2></div></div>
   <div class="skill-grid">
-    <div class="skill"><h3>PCB design</h3><ul><li>Schematic capture and multilayer layout, 2 to 4 layers shown here</li><li>KiCad and Altium Designer</li><li>Custom outlines, castellated modules, HAT and carrier boards</li><li>DRC clean layouts inside JLCPCB and PCBWay assembly rules</li><li>Impedance aware routing for USB, RF and high speed lines</li></ul></div>
+    <div class="skill"><h3>PCB design</h3><ul><li>Schematic capture and multilayer PCB layout</li><li>KiCad and Altium Designer</li><li>Custom outlines, castellated modules, HAT and carrier boards</li><li>DRC clean layouts inside JLCPCB and PCBWay assembly rules</li><li>Impedance aware routing for USB, RF and high speed lines</li></ul></div>
     <div class="skill"><h3>Embedded platforms</h3><ul><li>ESP32, ESP32-S3, ESP32-C3, STM32G0, nRF52832, RP2040</li><li>Bluetooth Low Energy, WiFi, LoRa, Zigbee, 433 MHz, Ethernet with PoE</li><li>UART, SPI, I2C, I2S, CAN, USB</li><li>Firmware bring up support and test firmware</li></ul></div>
     <div class="skill"><h3>Power and analog</h3><ul><li>Li ion and LiPo charging, protection and power path</li><li>Buck, boost and buck boost converters, LDOs, power multiplexing</li><li>Load cell, current sense, temperature, motion and gas sensor front ends</li><li>ESD, TVS, polyfuse and reverse polarity protection</li></ul></div>
     <div class="skill"><h3>Deliverables</h3><ul><li>Schematics with design notes</li><li>Gerbers, drill files and stack up notes</li><li>BOM with manufacturer part numbers and stock check</li><li>Pick and place files and assembly drawings</li><li>Bring up plan, test points and design review notes</li></ul></div>
@@ -146,7 +146,6 @@ const html = `<!DOCTYPE html>
       <a class="btn" href="mailto:shujachaudhry814@gmail.com">shujachaudhry814@gmail.com</a>
       <a class="btn ghost" href="https://www.linkedin.com/in/shuja-chaudhry-pcbdesign" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn ghost" href="https://www.fiverr.com/users/shuja_chaudhry/portfolio" target="_blank" rel="noopener">Fiverr</a>
-      <a class="btn ghost" href="https://github.com/Shuja848" target="_blank" rel="noopener">GitHub</a>
       <a class="btn ghost" href="Shuja_Chaudhry_PCB_Portfolio.pdf" target="_blank" rel="noopener">Download PDF portfolio</a>
     </div>
   </div>
