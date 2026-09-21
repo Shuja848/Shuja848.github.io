@@ -50,7 +50,7 @@ const html = `<!DOCTYPE html>
 <title>Shuja Chaudhry | PCB and Embedded Hardware Design</title>
 <meta name="description" content="PCB and embedded hardware design portfolio of Shuja Chaudhry: multilayer PCB layout, ESP32, STM32, nRF52, BLE, battery powered and sensor electronics. Schematic to fabrication ready files.">
 <meta property="og:title" content="Shuja Chaudhry | PCB and Embedded Hardware Design">
-<meta property="og:description" content="18 selected PCB projects: wearable BLE devices, battery management, sensor front ends, 4 layer boards and assembled hardware.">
+<meta property="og:description" content="16 selected PCB projects: wearable BLE devices, battery management, sensor front ends, 4 layer boards and assembled hardware.">
 <meta property="og:image" content="https://shuja848.github.io/img/13-stm32-nrf52-secure-ble-device/render.jpg">
 <meta property="og:url" content="https://shuja848.github.io/">
 <link rel="canonical" href="https://shuja848.github.io/">
@@ -85,7 +85,7 @@ const html = `<!DOCTYPE html>
     <div class="stats">
       <div><b>100+</b><span>PCB projects delivered</span></div>
       <div><b>2 to 4</b><span>layer boards</span></div>
-      <div><b>18</b><span>case studies below</span></div>
+      <div><b>${data.length}</b><span>case studies below</span></div>
       <div><b>Remote</b><span>UK hours available</span></div>
     </div>
   </div>
